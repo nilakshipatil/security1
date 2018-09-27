@@ -3,6 +3,9 @@ package demo.security1;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -10,19 +13,20 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.context.SecurityContextImpl;
 
-
-public class Security1Application {
+@Configuration
+@ComponentScan(basePackages="demo.security1")
+public class Application {
 
 	public static void main(String[] args) {
 			
-			ApplicationContext ctx= new ClassPathXmlApplicationContext("demo1.xml");
-			MyBusinessLogic logic= ctx.getBean(MyBusinessLogic.class ,"mylogic");
+			ApplicationContext ctx= new AnnotationConfigApplicationContext(Application.class);
+			MyBusinessLogic logic= ctx.getBean(MyBusinessLogic.class);
 			
 			SecurityContext Sectx=new SecurityContextImpl();
-			//Authentication auth=new UsernamePasswordAuthenticationToken("test", "test");
+			
 			Authentication auth=new UsernamePasswordAuthenticationToken("nilakshi", "admin");
 			Sectx.setAuthentication(auth);
-				SecurityContextHolder.setContext(Sectx);
+			SecurityContextHolder.setContext(Sectx);
 			
 			try{
 				logic.m1();
