@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" 
+	   xmlns:security="http://www.springframework.org/schema/security"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+http://www.springframework.org/schema/beans 
+http://www.springframework.org/schema/beans/spring-beans.xsd
+http://www.springframework.org/schema/security
+http://www.springframework.org/schema/security/spring-security.xsd">
+
+<!-- bean definitions here -->
+
+<security:authentication-manager>
+<security:authentication-provider>
+	<security:user-service>
+	<security:user name="nilakshi" password="admin" authorities="ROLE_USER,ROLE_ADMIN" />
+	<security:user name="test" password="test" authorities="ROLE_ADMIN" />
+	</security:user-service>
+</security:authentication-provider>
+</security:authentication-manager>
+
+
+<bean id="mylogic" class="demo.security1.MyBusinessLogic">
+<security:intercept-methods>
+<security:protect access="ROLE_USER" method="m1"/>
+<security:protect access="ROLE_ADMIN" method="m2"/>
+</security:intercept-methods>
+
+
+</bean>
+</beans>
